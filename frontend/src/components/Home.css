@@ -1,0 +1,22 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.home-container h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.welcome-message h2 {
+  color: #4caf50;
+  margin-bottom: 1rem;
+}
+
+.welcome-message p,
+.guest-message p {
+  color: #666;
+  font-size: 1.1rem;
+}

@@ -18,14 +18,17 @@ app.get("/api/test", (req, res) => {
   res.json({ message: "Hello from Sports Store Backend!" });
 });
 
-// Routes will be added here later
-// app.use('/api/products', require('./routes/products'));
-// app.use('/api/users', require('./routes/users'));
+// Routes
+app.use("/api/auth", require("./routes/auth"));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: "Something went wrong!" });
+  res.status(500).json({
+    success: false,
+    message: "Something went wrong!",
+    error: process.env.NODE_ENV === "development" ? err.message : {},
+  });
 });
 
 const PORT = process.env.PORT || 5000;

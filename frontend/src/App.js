@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchMessage = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/test");
-        setMessage(response.data.message);
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to connect to backend");
-        setLoading(false);
-      }
-    };
-
-    fetchMessage();
-  }, []);
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>My Sports Store</h1>
-        {loading && <p>Loading...</p>}
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {message && <p>{message}</p>}
-      </header>
-    </div>
+    <Router>
+      <AuthProvider>
+        <div className="App">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            {/* Example of protected route */}
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <div>Profile Page (Protected)</div>
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </div>
+      </AuthProvider>
+    </Router>
   );
 }
 
